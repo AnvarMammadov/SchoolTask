@@ -121,14 +121,14 @@ void AddStudentToFile(Student* student) {
 
 void main() {
 	system("color f0");
+	enum Operation { show = '1', add = '2', delet = '3' };
 	School* school = new School{ new Student * [2] {new Student{new char[30] {"Anvar"},new char[30] {"Mammadov"},21},
 		new Student{new char[30] {"Murad"},new char[30] {"Qojayev"},20}},2 };
-	enum Operations { show = '1', add = '2', delet = '3' };
-	while (true)
-	{
+	WriteFile(school);
+	while (true) {
 		system("cls");
 		ShowMenu();
-		char select = NULL;
+		char select;
 		cin >> select;
 		if (select == show) {
 			system("cls");
@@ -139,9 +139,9 @@ void main() {
 			system("cls");
 			auto student = GetNewStudent();
 			AddStudenteToSchool(school, student);
+			AddStudentToFile(student);
 			cout << "Student added successfully.." << endl;
 			system("pause");
-
 		}
 		else if (select == delet) {
 			cin.ignore();
@@ -154,6 +154,7 @@ void main() {
 			if (id > 0 && id <= school->count) {
 				int index = id - 1;
 				DeleteStudent(school, index);
+				WriteFile(school);
 				cout << "Student deleted successfully.." << endl;
 				system("pause");
 			}
@@ -163,8 +164,9 @@ void main() {
 			}
 		}
 		else {
-			cout << "Operation not found.." << endl;
+			cout << "Not found this operation.." << endl;
+			system("pause");
 		}
 	}
-	cout << endl << endl; cin.get();
+	cout << endl << endl << endl; cin.get();
 }

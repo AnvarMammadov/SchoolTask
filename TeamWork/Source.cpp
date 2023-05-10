@@ -84,6 +84,41 @@ void DeleteStudent(School*& school, int index) {
 }
 
 
+void WriteFile(School* school) {
+	FILE* file;
+	fopen_s(&file, "school.txt", "w");
+	for (size_t i = 0; i < school->count; i++)
+	{
+		fwrite(school->students[i]->name, sizeof(char), strlen(school->students[i]->name), file);
+		fwrite(" ", sizeof(char), 1, file);
+		fwrite(school->students[i]->surname, sizeof(char), strlen(school->students[i]->surname), file);
+		fwrite(" ", sizeof(char), 1, file);
+		string strAge = to_string(school->students[i]->age);
+		char* charAge = new char[strAge.length() + 1] {};
+		strcpy_s(charAge, strAge.length() + 1, strAge.c_str());
+		fwrite(charAge, sizeof(char), strlen(charAge), file);
+		fwrite("\n", sizeof(char), strlen("\n"), file);
+		delete[]charAge;
+		charAge = nullptr;
+	}
+	fclose(file);
+}
+
+
+void AddStudentToFile(Student* student) {
+	FILE* file;
+	fopen_s(&file, "school.txt", "a");
+	fwrite(student->name, sizeof(char), strlen(student->name), file);
+	fwrite(student->surname, sizeof(char), strlen(student->surname), file);
+	string strAge = to_string(student->age);
+	char* charAge = new char[strAge.length() + 1];
+	strcpy_s(charAge, strAge.length() + 1, strAge.c_str());
+	fwrite(charAge, sizeof(char), strlen(charAge), file);
+	delete[]charAge;
+	charAge = nullptr;
+	fclose(file);
+}
+
 void main() {
 	system("color f0");
 	School* school = new School{ new Student * [2] {new Student{new char[30] {"Anvar"},new char[30] {"Mammadov"},21},

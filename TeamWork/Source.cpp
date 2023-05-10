@@ -86,6 +86,8 @@ void DeleteStudent(School*& school, int index) {
 
 void main() {
 	system("color f0");
+	School* school = new School{ new Student * [2] {new Student{new char[30] {"Anvar"},new char[30] {"Mammadov"},21},
+		new Student{new char[30] {"Murad"},new char[30] {"Qojayev"},20}},2 };
 	enum Operations { show = '1', add = '2', delet = '3' };
 	while (true)
 	{
@@ -94,19 +96,40 @@ void main() {
 		char select = NULL;
 		cin >> select;
 		if (select == show) {
-
+			system("cls");
+			ShowAllStudent(school);
+			system("pause");
 		}
 		else if (select == add) {
+			system("cls");
+			auto student = GetNewStudent();
+			AddStudenteToSchool(school, student);
+			cout << "Student added successfully.." << endl;
+			system("pause");
 
 		}
 		else if (select == delet) {
-
+			cin.ignore();
+			cin.clear();
+			system("cls");
+			ShowAllStudent(school);
+			cout << "Enter student ID for delete from school students list : ";
+			int id = 0;
+			cin >> id;
+			if (id > 0 && id <= school->count) {
+				int index = id - 1;
+				DeleteStudent(school, index);
+				cout << "Student deleted successfully.." << endl;
+				system("pause");
+			}
+			else {
+				cout << "Not Found ID.." << endl;
+				system("pause");
+			}
 		}
 		else {
 			cout << "Operation not found.." << endl;
 		}
 	}
-
-
 	cout << endl << endl; cin.get();
 }
